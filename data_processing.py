@@ -9,7 +9,7 @@ from typing import Iterator, Iterable, Tuple, Text, Union, Sequence
 from nltk.stem import WordNetLemmatizer, PorterStemmer
 
 class data_bayes:
-    def read_to_turple(self, filename: Text, is_lemmatized=False, is_stemmed=False) -> Iterable[Tuple[Sequence[Text], Sequence[Text], Text]]:
+    def read_to_turple(self, filename: Text, is_lemmatized=False, is_stemmed=False) -> Iterable[Tuple[Tuple[Sequence[Text], Sequence[Text]], Text]]:
         """Generate (premise, hypothesis, label) turple for each sentence in the training, dev, test data.
             the structure for each line in the file name is followed:
             gold_label	premise_binary_parse	hypothesis_binary_parse	premise_parse 	hypothesis_parse

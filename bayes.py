@@ -18,11 +18,12 @@ class bayes:
         self.priors = Counter()
         self.condprob = Counter()
 
-    def train(self, datas: Iterable[Sequene[Text], Sequene[Text], Text]):
+    def train(self, datas: Iterable[Tuple[Tuple[Sequence[Text], Sequence[Text]], Text]]):
     	N = 0
     	for data in datas:
     		N = N + 1
-            premise, hypothesis, label = data
+            sentences, label = data
+            premise, hypothesis = sentences
             self.classCount[label] = self.classCount.get(label, 0) + 1
             # count unigram, bigram
             for word in premise+hypothesis:
