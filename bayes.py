@@ -11,12 +11,11 @@ class bayes:
         """
         self.classCount = Counter()
         self.vocabulary = Counter()
+        self.globVoc = set()
         self.vocabulary["entailment"] = Counter()
         self.vocabulary["neutral"] = Counter()
         self.vocabulary["contradiction"] = Counter()
-        self.priorE = 0.0
-        self.priorN = 0.0
-        self.priorC = 0.0
+        self.priors = Counter()
         self.condprob = Counter()
 
     def train(self, datas: Iterable[Sequene[Text], Sequene[Text], Text]):
@@ -28,17 +27,32 @@ class bayes:
             # count unigram, bigram
             for word in premise+hypothesis:
                 self.vocabulary[label][word] = self.vocabulary[label].get(word, 0) + 1
-        self.priorE = math.log(self.classCount["entailment"] / N)
-        self.priorN = math.log(self.classCount["neutral"] / N)
-        self.priorC = math.log(self.classCount["contradiction"] / N)
+                self.globVoc.add(word)
+        self.priors["entailment"] = math.log(self.classCount["entailment"] / N)
+        self.priors["neutral"] = math.log(self.classCount["neutral"] / N)
+        self.priors["contradiction"] = math.log(self.classCount["contradiction"] / N)
         for label in ["entailment", "neutral", "contradiction"]:
             total = sum(self.vocabulary[label].values())
             count = len(self.vocabulary[label].keys())
             for t in self.vocabulary[label]:
             	self.condprob[t] = self.condprob.get(t, Counter())
                 self.condprob[t][label] = math.log((self.vocabulary[label][t] + 1) / (total + count))
-    def predict(self, texts:Iterable[Sequene[Text]]):
-               
+    def predict(self, texts: Iterable[Tuple[Sequence[Text], Sequence[Text]]]) -> Sequence[Text]:
+    	preds = []
+    	probDict = Counter()
+        for text in texts:
+        	premise, hypothesis = text
+            for l in ["entailment", "neutral", "contradiction"]:
+            	probDict[l] = self.priors[l]
+            	for word in premise+hypothesis:
+            		if word in self.globVoc:
+            			probDict[l] += self.condprob[word][l]
+            preds.append(max(probDict))
+        return preds	
+                        
+
+
+
 
 
 
