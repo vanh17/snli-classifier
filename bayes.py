@@ -17,6 +17,7 @@ class bayes:
         self.priorE = 0.0
         self.priorN = 0.0
         self.priorC = 0.0
+        self.condprob = Counter()
 
     def train(self, datas: Iterable[Sequene[Text], Sequene[Text], Text]):
     	N = 0
@@ -29,7 +30,15 @@ class bayes:
                 self.vocabulary[label][word] = self.vocabulary[label].get(word, 0) + 1
         self.priorE = math.log(self.classCount["entailment"] / N)
         self.priorN = math.log(self.classCount["neutral"] / N)
-        self.priorC = math.log(self.classCount["contradiction"] / N)        
+        self.priorC = math.log(self.classCount["contradiction"] / N)
+        for label in ["entailment", "neutral", "contradiction"]:
+            total = sum(self.vocabulary[label].values())
+            count = len(self.vocabulary[label].keys())
+            for t in self.vocabulary[label]:
+            	self.condprob[t] = self.condprob.get(t, Counter())
+                self.condprob[t][label] = math.log((self.vocabulary[label][t] + 1) / (total + count))
+    def predict(self, texts:Iterable[Sequene[Text]]):
+               
 
 
 
