@@ -42,6 +42,6 @@ class data_bayes:
             self.priorProb[l] = self.typeCount[l] / sum(self.typeCount.values())
 
 class data_mLSTM:
-    def __init__():
+    def __init__(self):
 
-    def data():
+    def data(self, filename: Text):
