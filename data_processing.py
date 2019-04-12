@@ -1,0 +1,47 @@
+import os
+import re
+import string
+import math
+import io
+import nltk
+from collections import Counter
+from typing import Iterator, Iterable, Tuple, Text, Union, Sequence
+from nltk.stem import WordNetLemmatizer, PorterStemmer
+
+class data_bayes:
+    self.typeCount = Counter()
+    self.priorProb = Counter()
+    def read_to_turple(self, filename: Text, is_lemmatized=False, is_stemmed=False) -> Iterable[Tuple[Sequence[Text], Sequence[Text], Text]]:
+        """Generate (premise, hypothesis, label) turple for each sentence in the training, dev, test data.
+            the structure for each line in the file name is followed:
+            gold_label	premise_binary_parse	hypothesis_binary_parse	premise_parse 	hypothesis_parse
+            The first line of the file is the tittle for each item, so we will ignore this line
+            Also ignore the lines where the first item in the line is _, because that means all the annotators 
+            could not agree on the label for such pairs.
+        """
+        with io.open(filename, "r") as data:
+            lemmatizer = WordNetLemmatizer()
+            stemmer = PorterStemmer()
+            for line in data:
+                line = line.split('\t')
+                if line[0] == "gold_label" or line[0] == "_":
+                    continue
+                label = line[0]
+                premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                if is_stemmed:
+                    premise = [stemmer.stem(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                    hypothesis = [stemmer.stem(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                if is_lemmatized:
+                    premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                    hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                yield (premise, hypothesis, label)
+                self.typeCount[label] = self.typeCount.get(label, 0) + 1
+    def calculate_prior() -> None:
+        for l in self.typeCount:
+            self.priorProb[l] = self.typeCount[l] / sum(self.typeCount.values())
+
+class data_mLSTM:
+    def __init__():
+
+    def data():
