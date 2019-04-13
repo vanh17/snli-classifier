@@ -25,8 +25,9 @@ class Data_bayes:
                 if line[0] == "gold_label" or line[0] == "_":
                     continue
                 label = line[0]
-                premise = [c for c in nltk.word_tokenize(line[4])]
-                hypothesis = [c for c in nltk.word_tokenize(line[5])]
+                if not is_stemmed and not is_lemmatized:
+                    premise = [c for c in nltk.word_tokenize(line[4])]
+                    hypothesis = [c for c in nltk.word_tokenize(line[5])]
                 if is_stemmed:
                     premise = [stemmer.stem(c) for c in nltk.word_tokenize(line[4])]
                     hypothesis = [stemmer.stem(c) for c in nltk.word_tokenize(line[5])]
