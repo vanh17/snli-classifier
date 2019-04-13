@@ -46,7 +46,7 @@ class Bayes:
     	probDict = [0] * len(possible_labels)
     	for text in texts:
     		premise, hypothesis = text
-    		for i in range(len(possible_labels)):
+    		for l in range(len(possible_labels)):
     			probDict[l] = self.priors[possible_labels[l]]
     			for word in premise+hypothesis:
     				if word in self.globVoc:
