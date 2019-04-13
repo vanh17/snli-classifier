@@ -3,6 +3,7 @@ import bayes
 import sys
 import argparse
 import data_processing
+import numpy as np
 from sklearn.metrics import f1_score, accuracy_score
 
 # Define the argparser here to keep track of the user command
@@ -37,6 +38,7 @@ def main():
 
     print("accuracy: " + str(accuracy))
     print("F1_macro: " + str(f1_macro))
+    print(np.unique(predicted_indices))
     print("F1_contracdiction: " + str(f1[0]))
     print("F1_entailment: " + str(f1[1]))
     print("F1_neutral: " + str(f1[2]))
