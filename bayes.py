@@ -44,12 +44,12 @@ class Bayes:
     	for text in texts:
         	premise, hypothesis = text
         	for l in ["entailment", "neutral", "contradiction"]:
-            	probDict[l] = self.priors[l]
-            	for word in premise+hypothesis:
-            		if word in self.globVoc:
-            			probDict[l] += self.condprob[word][l]
-        	preds.append(max(probDict))
-    	return preds	
+				probDict[l] = self.priors[l]
+				for word in premise+hypothesis:
+					if word in self.globVoc:
+						probDict[l] += self.condprob[word][l]
+			preds.append(max(probDict))
+		return preds	
                         
 
 
