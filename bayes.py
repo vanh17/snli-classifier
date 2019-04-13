@@ -43,7 +43,7 @@ class Bayes:
         		self.condprob[t] = self.condprob.get(t, Counter())
         		self.condprob[t][label] = math.log((self.vocabulary[label][t] + 1) / (total + count))
     
-    def predict(self, texts: Iterable[Tuple[Sequence[Text], Sequence[Text]]]) -> Sequence[Text]:
+    def predict(self, texts: Iterable[Tuple[Sequence[Text], Sequence[Text], Text]]) -> Sequence[Text]:
     	preds = []
     	probDict = [0] * len(possible_labels)
     	for text in texts:
