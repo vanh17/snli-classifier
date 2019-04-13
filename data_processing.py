@@ -38,4 +38,6 @@ class Data_bayes:
 class Data_mLSTM:
     def __init__(self):
 
+
     def data(self, filename: Text):
+        
