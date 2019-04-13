@@ -1,9 +1,8 @@
-from data_processing import data_bayes
 from collections import Counter
 import sklearn
 import math
 
-class bayes:
+class Bayes:
     def __init__(self):
         """ create class object to hold important information
         vocaublary as a counter to hold vocabulary for each class that need to classify
@@ -38,6 +37,7 @@ class bayes:
             for t in self.vocabulary[label]:
             	self.condprob[t] = self.condprob.get(t, Counter())
                 self.condprob[t][label] = math.log((self.vocabulary[label][t] + 1) / (total + count))
+    
     def predict(self, texts: Iterable[Tuple[Sequence[Text], Sequence[Text]]]) -> Sequence[Text]:
     	preds = []
     	probDict = Counter()
