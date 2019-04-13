@@ -1,4 +1,5 @@
 from collections import Counter
+from typing import Iterator, Iterable, Tuple, Text, Union, Sequence
 import sklearn
 import math
 
