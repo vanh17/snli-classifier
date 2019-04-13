@@ -54,16 +54,6 @@ class Bayes:
     				if word in self.globVoc:
     					probDict[l] += self.condprob[word][possible_labels[l]]
     		preds.append(possible_labels[np.argmax(probDict)])
-    		if id_test == "954987350.jpg#2r1c":
-    			print("A woman in a blue tank top holding a car. " + possible_labels[np.argmax(probDict)])
-    		if id_test == "5672704774.jpg#0r1c":
-    			print("Two girls playing hopscotch in an open court. " + possible_labels[np.argmax(probDict)])
-    		if id_test == "51900752.jpg#1r1n":
-    			print("The two men are not wearing shirts. " + possible_labels[np.argmax(probDict)])
-    		if id_test == "2943399558.jpg#1r1n":
-    			print(" A man is climbing a ladder on a cliff in hopes of not falling to his death. " + possible_labels[np.argmax(probDict)])
-    		if id_test == "3569329986.jpg#4r1e":
-    			print(" The girl is not standing still. " + possible_labels[np.argmax(probDict)])
     	return preds	
                         
 
