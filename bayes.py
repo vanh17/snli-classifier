@@ -21,12 +21,12 @@ class Bayes:
         self.priors = Counter()
         self.condprob = Counter()
 
-    def train(self, datas: Iterable[Tuple[Tuple[Sequence[Text], Sequence[Text]], Text]]):
+    def train(self, datas: Iterable[Tuple[Tuple[Sequence[Text], Sequence[Text], Text], Text]]):
     	N = 0
     	for data in datas:
     		N = N + 1
     		sentences, label = data
-    		premise, hypothesis = sentences
+    		premise, hypothesis, id_train = sentences
     		self.classCount[label] = self.classCount.get(label, 0) + 1
     		# count unigram, bigram
     		for word in premise+hypothesis:
@@ -47,16 +47,18 @@ class Bayes:
     	preds = []
     	probDict = [0] * len(possible_labels)
     	for text in texts:
-    		premise, hypothesis = text
+    		premise, hypothesis, id_test = text
     		for l in range(len(possible_labels)):
     			probDict[l] = self.priors[possible_labels[l]]
     			for word in premise+hypothesis:
     				if word in self.globVoc:
     					probDict[l] += self.condprob[word][possible_labels[l]]
     		preds.append(possible_labels[np.argmax(probDict)])
-    		if hypothesis == nltk.word_tokenize("A woman in a blue tank top holding a car."):
+    		if id_test == "51900752.jpg#1r1n":
+    			print("The two men are not wearing shirts." + possible_labels[np.argmax(probDict)])
+    		if id_test == "954987350.jpg#2r1c":
     			print("A woman in a blue tank top holding a car. " + possible_labels[np.argmax(probDict)])
-    		if hypothesis == nltk.word_tokenize("Two girls playing hopscotch in an open court."):
+    		if id_test == "5672704774.jpg#0r1c":
     			print("Two girls playing hopscotch in an open court. " + possible_labels[np.argmax(probDict)])
     	return preds	
                         
