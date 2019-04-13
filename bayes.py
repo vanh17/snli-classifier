@@ -49,7 +49,7 @@ class Bayes:
     			for word in premise+hypothesis:
     				if word in self.globVoc:
     					probDict[l] += self.condprob[word][l]
-    			preds.append(max(probDict))
+    		preds.append(max(probDict))
     	return preds	
                         
 
