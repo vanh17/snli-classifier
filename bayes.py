@@ -21,22 +21,22 @@ class Bayes:
     	N = 0
     	for data in datas:
     		N = N + 1
-            sentences, label = data
-            premise, hypothesis = sentences
-            self.classCount[label] = self.classCount.get(label, 0) + 1
-            # count unigram, bigram
-            for word in premise+hypothesis:
-                self.vocabulary[label][word] = self.vocabulary[label].get(word, 0) + 1
-                self.globVoc.add(word)
-        self.priors["entailment"] = math.log(self.classCount["entailment"] / N)
-        self.priors["neutral"] = math.log(self.classCount["neutral"] / N)
-        self.priors["contradiction"] = math.log(self.classCount["contradiction"] / N)
-        for label in ["entailment", "neutral", "contradiction"]:
-            total = sum(self.vocabulary[label].values())
-            count = len(self.vocabulary[label].keys())
-            for t in self.vocabulary[label]:
-            	self.condprob[t] = self.condprob.get(t, Counter())
-                self.condprob[t][label] = math.log((self.vocabulary[label][t] + 1) / (total + count))
+    		sentences, label = data
+    		premise, hypothesis = sentences
+    		self.classCount[label] = self.classCount.get(label, 0) + 1
+    		# count unigram, bigram
+    		for word in premise+hypothesis:
+    			self.vocabulary[label][word] = self.vocabulary[label].get(word, 0) + 1
+    			self.globVoc.add(word)
+    	self.priors["entailment"] = math.log(self.classCount["entailment"] / N)
+    	self.priors["neutral"] = math.log(self.classCount["neutral"] / N)
+    	self.priors["contradiction"] = math.log(self.classCount["contradiction"] / N)
+    	for label in ["entailment", "neutral", "contradiction"]:
+        	total = sum(self.vocabulary[label].values())
+        	count = len(self.vocabulary[label].keys())
+        	for t in self.vocabulary[label]:
+        		self.condprob[t] = self.condprob.get(t, Counter())
+        		self.condprob[t][label] = math.log((self.vocabulary[label][t] + 1) / (total + count))
     
     def predict(self, texts: Iterable[Tuple[Sequence[Text], Sequence[Text]]]) -> Sequence[Text]:
     	preds = []
