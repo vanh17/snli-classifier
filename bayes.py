@@ -44,7 +44,7 @@ class Bayes:
     	probDict = Counter()
     	for text in texts:
     		premise, hypothesis = text
-    		for l in ["entailment", "neutral", "contradiction"]:
+    		for l in ["contradiction", "entailment", "neutral"]:
     			probDict[l] = self.priors[l]
     			for word in premise+hypothesis:
     				if word in self.globVoc:
