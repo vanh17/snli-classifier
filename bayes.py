@@ -2,6 +2,7 @@ from collections import Counter
 from typing import Iterator, Iterable, Tuple, Text, Union, Sequence
 import sklearn
 import math
+import nltk
 import numpy as np
 
 possible_labels = ["contradiction", "entailment", "neutral"]
@@ -53,6 +54,10 @@ class Bayes:
     				if word in self.globVoc:
     					probDict[l] += self.condprob[word][possible_labels[l]]
     		preds.append(possible_labels[np.argmax(probDict)])
+    		if hypothesis == nltk.word_tokenize("A woman in a blue tank top holding a car."):
+    			print("A woman in a blue tank top holding a car. " + possible_labels[np.argmax(probDict)])
+    		if hypothesis == nltk.word_tokenize("Two girls playing hopscotch in an open court."):
+    			print("Two girls playing hopscotch in an open court. " + possible_labels[np.argmax(probDict)])
     	return preds	
                         
 
