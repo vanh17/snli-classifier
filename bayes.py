@@ -2,6 +2,7 @@ from collections import Counter
 from typing import Iterator, Iterable, Tuple, Text, Union, Sequence
 import sklearn
 import math
+import numpy as np
 
 possible_labels = ["contradiction", "entailment", "neutral"]
 class Bayes:
