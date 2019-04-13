@@ -8,7 +8,7 @@ from collections import Counter
 from typing import Iterator, Iterable, Tuple, Text, Union, Sequence
 from nltk.stem import WordNetLemmatizer, PorterStemmer
 
-class data_bayes:
+class Data_bayes:
     def read_to_turple(self, filename: Text, is_lemmatized=False, is_stemmed=False) -> Iterable[Tuple[Tuple[Sequence[Text], Sequence[Text]], Text]]:
         """Generate (premise, hypothesis, label) turple for each sentence in the training, dev, test data.
             the structure for each line in the file name is followed:
@@ -35,7 +35,7 @@ class data_bayes:
                     hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
                 yield (premise, hypothesis, label)
 
-class data_mLSTM:
+class Data_mLSTM:
     def __init__(self):
 
     def data(self, filename: Text):
