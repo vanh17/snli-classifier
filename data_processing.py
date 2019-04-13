@@ -25,14 +25,14 @@ class Data_bayes:
                 if line[0] == "gold_label" or line[0] == "_":
                     continue
                 label = line[0]
-                premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
-                hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                premise = [c for c in nltk.word_tokenize(line[4])]
+                hypothesis = [c for c in nltk.word_tokenize(line[5])]
                 if is_stemmed:
-                    premise = [stemmer.stem(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
-                    hypothesis = [stemmer.stem(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                    premise = [stemmer.stem(c) for c in nltk.word_tokenize(line[4])]
+                    hypothesis = [stemmer.stem(c) for c in nltk.word_tokenize(line[5])]
                 if is_lemmatized:
-                    premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
-                    hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4].lower().split(" "))]
+                    premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4])]
+                    hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[5])]
                 yield (premise, hypothesis, label)
 
 # class Data_mLSTM:
@@ -40,4 +40,3 @@ class Data_bayes:
 
 
 #     def data(self, filename: Text):
-        
