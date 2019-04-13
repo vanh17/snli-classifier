@@ -26,14 +26,14 @@ class Data_bayes:
                     continue
                 label = line[0]
                 if not is_stemmed and not is_lemmatized:
-                    premise = [c for c in nltk.word_tokenize(line[5])]
-                    hypothesis = [c for c in nltk.word_tokenize(line[6])]
+                    premise = [c for c in nltk.word_tokenize(line[4])]
+                    hypothesis = [c for c in nltk.word_tokenize(line[5])]
                 if is_stemmed:
-                    premise = [stemmer.stem(c) for c in nltk.word_tokenize(line[5])]
-                    hypothesis = [stemmer.stem(c) for c in nltk.word_tokenize(line[6])]
+                    premise = [stemmer.stem(c) for c in nltk.word_tokenize(line[4])]
+                    hypothesis = [stemmer.stem(c) for c in nltk.word_tokenize(line[5])]
                 if is_lemmatized:
-                    premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[5])]
-                    hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[6])]
+                    premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[4])]
+                    hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[5])]
                 yield ((premise, hypothesis, line[8]), label)
 
 # class Data_mLSTM:

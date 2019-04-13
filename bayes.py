@@ -54,7 +54,6 @@ class Bayes:
     				if word in self.globVoc:
     					probDict[l] += self.condprob[word][possible_labels[l]]
     		preds.append(possible_labels[np.argmax(probDict)])
-    		print(id_test+ "NEW")
     		if id_test == "51900752.jpg#1r1n":
     			print("The two men are not wearing shirts. " + possible_labels[np.argmax(probDict)])
     		if id_test == "954987350.jpg#2r1c":
