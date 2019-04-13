@@ -27,6 +27,7 @@ class Bayes:
     		self.classCount[label] = self.classCount.get(label, 0) + 1
     		# count unigram, bigram
     		for word in premise+hypothesis:
+    			self.vocabulary[label] = self.vocabulary.get(label, Counter())
     			self.vocabulary[label][word] = self.vocabulary[label].get(word, 0) + 1
     			self.globVoc.add(word)
     	self.priors["entailment"] = math.log(self.classCount["entailment"] / N)
