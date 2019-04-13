@@ -1,3 +1,4 @@
+import pprint
 import bayes
 import sys
 import argparse
