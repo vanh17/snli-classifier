@@ -35,9 +35,3 @@ class Data_bayes:
                     premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[5])]
                     hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[6])]
                 yield ((premise, hypothesis, line[8]), label)
-
-# class Data_mLSTM:
-#     def __init__(self):
-
-
-#     def data(self, filename: Text):
