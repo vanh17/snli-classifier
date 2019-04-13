@@ -39,6 +39,7 @@ def main():
     print("accuracy: " + str(accuracy*100))
     print("F1_macro: " + str(f1_macro*100))
     print(np.unique(predicted_indices))
+    print(np.unique(labels))
     print("F1_contradiction: " + str(f1[0]*100))
     print("F1_entailment: " + str(f1[1]*100))
     print("F1_neutral: " + str(f1[2]*100))
