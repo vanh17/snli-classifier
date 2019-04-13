@@ -3,6 +3,7 @@ from typing import Iterator, Iterable, Tuple, Text, Union, Sequence
 import sklearn
 import math
 
+possible_labels = ["contradiction", "entailment", "neutral"]
 class Bayes:
     def __init__(self):
         """ create class object to hold important information
@@ -33,7 +34,7 @@ class Bayes:
     	self.priors["entailment"] = math.log(self.classCount["entailment"] / N)
     	self.priors["neutral"] = math.log(self.classCount["neutral"] / N)
     	self.priors["contradiction"] = math.log(self.classCount["contradiction"] / N)
-    	for label in ["entailment", "neutral", "contradiction"]:
+    	for label in possible_labels:
         	total = sum(self.vocabulary[label].values())
         	count = len(self.vocabulary[label].keys())
         	for t in self.vocabulary[label]:
@@ -42,17 +43,16 @@ class Bayes:
     
     def predict(self, texts: Iterable[Tuple[Sequence[Text], Sequence[Text]]]) -> Sequence[Text]:
     	preds = []
-    	probDict = Counter()
+    	probDict = [0] * len(possible_labels)
     	for text in texts:
     		premise, hypothesis = text
-    		for l in ["contradiction", "entailment", "neutral"]:
-    			probDict[l] = self.priors[l]
+    		for i in range(len(possible_labels)):
+    			probDict[l] = self.priors[possible_labels[l]]
     			for word in premise+hypothesis:
     				if word in self.globVoc:
-    					probDict[l] += self.condprob[word][l]
-    		print(max(probDict))
-    		print(probDict)
-    		preds.append(max(probDict))
+    					probDict[l] += self.condprob[word][possible_labels[l]]
+    		print(possible_labels[np.argmax(probDict)])
+    		preds.append(possible_labels[np.argmax(probDict)])
     	return preds	
                         
 
