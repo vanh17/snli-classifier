@@ -22,7 +22,7 @@ class Data_bayes:
             stemmer = PorterStemmer()
             for line in data:
                 line = line.split('\t')
-                if line[0] == "gold_label" or line[0] == "_":
+                if line[0] == "gold_label" or line[0] == "-":
                     continue
                 label = line[0]
                 if not is_stemmed and not is_lemmatized:
