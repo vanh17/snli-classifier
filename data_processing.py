@@ -46,7 +46,6 @@ class Data_bayes:
             if t[0] == "(":
                 currPos = t[1:]
             if t[-1] == ")":
-                print(t)
                 word = re.findall(r'([\w|\.|\?|\,|\;|\!|\:]+)\)+', t)
                 if len(word) > 0:
                     posList.append((word[0].lower(), currPos))
