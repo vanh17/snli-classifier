@@ -31,7 +31,7 @@ class Bayes:
             # count unigram
             # use only unigram in hypothesis because that is most important 
             # sentence to determine if the pair is entailment, neutral or contradiction
-            for word in premise+hypothesis:
+            for word in hypothesis:
                 self.vocabulary[label] = self.vocabulary.get(label, Counter())
                 self.vocabulary[label][word] = self.vocabulary[label].get(word, 0) + 1
                 # self.globVoc.add(word)
@@ -78,18 +78,18 @@ class Bayes:
                 probDict[l] = self.priors[possible_labels[l]]
                 # use only unigram, bigram in hypothesis because that is most important 
                 # sentence to determine if the pair is entailment, neutral or contradiction
-                for word in premise+hypothesis:
+                for word in hypothesis:
                     if word in self.vocabulary[possible_labels[l]]:
                         probDict[l] += self.condprob[word][possible_labels[l]]
-                    # else:
-                    #     probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
+                    else:
+                        probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
                 # bigram
                 for itr in range(len(hypothesis)-1):
                     t = hypothesis[itr]+"_"+hypothesis[itr+1]
                     if t in self.vocabulary[possible_labels[l]]:
                         probDict[l] += self.condprob[t][possible_labels[l]]
-                    # else:
-                    #     probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
+                    else:
+                        probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
                 # cross unigram
                 for pre in range(len(prePos)):
                     for hypo in range(len(hypoPos)):
@@ -97,8 +97,8 @@ class Bayes:
                             t = prePos[pre][0]+"_"+hypoPos[hypo][0] 
                             if t in self.vocabulary[possible_labels[l]]:
                                probDict[l] += self.condprob[t][possible_labels[l]]
-                            # else:
-                            #     probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
+                            else:
+                                probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
                 # cross bigram
                 for pre in range(len(prePos)-1):
                     for hypo in range(len(hypoPos)-1):
@@ -106,7 +106,7 @@ class Bayes:
                             t = prePos[pre][0]+"_"+prePos[pre+1][0]+"_"+hypoPos[hypo][0]+"_"+hypoPos[hypo+1][0]
                             if t in self.vocabulary[possible_labels[l]]:
                                 probDict[l] += self.condprob[t][possible_labels[l]]
-                            # else:
-                            #     probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
+                            else:
+                                probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
             preds.append(possible_labels[np.argmax(probDict)])
         return preds
