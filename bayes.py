@@ -31,7 +31,7 @@ class Bayes:
             # count unigram
             # use only unigram in hypothesis because that is most important 
             # sentence to determine if the pair is entailment, neutral or contradiction
-            for word in hypothesis:
+            for word in premise+hypothesis:
                 self.vocabulary[label] = self.vocabulary.get(label, Counter())
                 self.vocabulary[label][word] = self.vocabulary[label].get(word, 0) + 1
                 # self.globVoc.add(word)
@@ -78,7 +78,7 @@ class Bayes:
                 probDict[l] = self.priors[possible_labels[l]]
                 # use only unigram, bigram in hypothesis because that is most important 
                 # sentence to determine if the pair is entailment, neutral or contradiction
-                for word in hypothesis:
+                for word in premise+hypothesis:
                     if word in self.vocabulary[possible_labels[l]]:
                         probDict[l] += self.condprob[word][possible_labels[l]]
                 # bigram
