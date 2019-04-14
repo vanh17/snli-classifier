@@ -34,4 +34,20 @@ class Data_bayes:
                 if is_lemmatized:
                     premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[5])]
                     hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[6])]
-                yield ((premise, hypothesis, line[8]), label)
+                prePos = self.extract_pos(line[3])
+                hypoPos = self.extract_pos(line[4])
+                yield ((premise, hypothesis, line[8], prePos, hypoPos), label)
+
+    def extract_pos(self, pos: Text) -> Sequence[Turple[Text, Text]]:
+        pos = pos.split(" ")
+        posList = []
+        currPos = ""
+        for t in pos:
+            if t[0] == "(":
+                currPos = t[1:]
+            if t[-1] == ")":
+                word = re.findall(r'(\w+)\)+', t)
+                posList.append((word, currPos))
+        return posList
+
+
