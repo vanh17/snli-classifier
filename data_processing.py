@@ -38,7 +38,7 @@ class Data_bayes:
                 hypoPos = self.extract_pos(line[4])
                 yield ((premise, hypothesis, line[8], prePos, hypoPos), label)
 
-    def extract_pos(self, pos: Text) -> Sequence[Turple[Text, Text]]:
+    def extract_pos(self, pos: Text) -> Sequence[Tuple[Text, Text]]:
         pos = pos.split(" ")
         posList = []
         currPos = ""
