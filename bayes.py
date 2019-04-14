@@ -37,16 +37,26 @@ class Bayes:
                 self.globVoc.add(word)
             # same as unigram but this is for bigram
             for itr in range(len(hypothesis)-1):
+                t = hypothesis[itr]+"_"+hypothesis[itr+1]
                 self.vocabulary[label] = self.vocabulary.get(label, Counter())
-                self.vocabulary[label][hypothesis[itr]+"_"+hypothesis[itr+1]] = self.vocabulary[label].get(hypothesis[itr]+"_"+hypothesis[itr+1], 0) + 1
-                self.globVoc.add(hypothesis[itr]+"_"+hypothesis[itr+1])
+                self.vocabulary[label][t] = self.vocabulary[label].get(t, 0) + 1
+                self.globVoc.add(t)
             # cross unigram
             for pre in range(len(prePos)):
                 for hypo in range(len(hypoPos)):
                     if prePos[pre][1] == hypoPos[hypo][1]:
+                        t = prePos[pre][0]+"_"+hypoPos[hypo][0]
                         self.vocabulary[label] = self.vocabulary.get(label, Counter())
-                        self.vocabulary[label][prePos[pre][0]+"_"+hypoPos[hypo][0]] = self.vocabulary[label].get(prePos[pre][0]+"_"+hypoPos[hypo][0], 0) + 1
-                        self.globVoc.add(prePos[pre][0]+"_"+hypoPos[hypo][0])
+                        self.vocabulary[label][t] = self.vocabulary[label].get(t, 0) + 1
+                        self.globVoc.add(t)
+            # cross bigram
+            for pre in range(len(prePos)-1):
+                for hypo in range(len(hypoPos)-1):
+                    if prePos[pre+1][1] == hypoPos[hypo+1][1]:
+                        t = prePos[pre][0]+"_"+prePos[pre+1][0]+"_"+hypoPos[hypo][0]+"_"+hypoPos[hypo+1][0]
+                        self.vocabulary[label] = self.vocabulary.get(label, Counter())
+                        self.vocabulary[label][t] = self.vocabulary[label].get(t, 0) + 1
+                        self.globVoc.add(t)
         self.priors["entailment"] = math.log(self.classCount["entailment"] / N)
         self.priors["neutral"] = math.log(self.classCount["neutral"] / N)
         self.priors["contradiction"] = math.log(self.classCount["contradiction"] / N)
@@ -71,13 +81,22 @@ class Bayes:
                         probDict[l] += self.condprob[word][possible_labels[l]]
                 # bigram
                 for itr in range(len(hypothesis)-1):
-                    if hypothesis[itr]+"_"+hypothesis[itr+1] in self.globVoc:
-                        probDict[l] += self.condprob[hypothesis[itr]+"_"+hypothesis[itr+1]][possible_labels[l]]
+                    t = hypothesis[itr]+"_"+hypothesis[itr+1]
+                    if t in self.globVoc:
+                        probDict[l] += self.condprob[t][possible_labels[l]]
                 # cross unigram
                 for pre in range(len(prePos)):
                     for hypo in range(len(hypoPos)):
                         if prePos[pre][1] == hypoPos[hypo][1]:
-                            if prePos[pre][0]+"_"+hypoPos[hypo][0] in self.globVoc:
-                               probDict[l] += self.condprob[prePos[pre][0]+"_"+hypoPos[hypo][0]][possible_labels[l]]    
+                            t = prePos[pre][0]+"_"+hypoPos[hypo][0] 
+                            if t in self.globVoc:
+                               probDict[l] += self.condprob[t][possible_labels[l]]
+                # cross bigram
+                for pre in range(len(prePos)-1):
+                    for hypo in range(len(hypoPos)-1):
+                        if prePos[pre+1][1] == hypoPos[hypo+1][1]:
+                            t = prePos[pre][0]+"_"+prePos[pre+1][0]+"_"+hypoPos[hypo][0]+"_"+hypoPos[hypo+1][0]
+                            if t in self.globVoc:
+                                 probDict[l] += self.condprob[t][possible_labels[l]]
             preds.append(possible_labels[np.argmax(probDict)])
         return preds
