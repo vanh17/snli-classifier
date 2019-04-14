@@ -12,7 +12,7 @@ class Data_bayes:
     def read_to_turple(self, filename: Text, is_lemmatized=False, is_stemmed=False) -> Iterable[Tuple[Tuple[Sequence[Text], Sequence[Text], Text], Text]]:
         """Generate (premise, hypothesis, label) turple for each sentence in the training, dev, test data.
             the structure for each line in the file name is followed:
-            gold_label	premise_binary_parse	hypothesis_binary_parse	premise_parse 	hypothesis_parse
+            gold_label  premise_binary_parse    hypothesis_binary_parse premise_parse   hypothesis_parse
             The first line of the file is the tittle for each item, so we will ignore this line
             Also ignore the lines where the first item in the line is _, because that means all the annotators 
             could not agree on the label for such pairs.
@@ -49,5 +49,3 @@ class Data_bayes:
                 word = re.findall(r'(\w+)\)+', t)[0].lower()
                 posList.append((word, currPos))
         return posList
-
-

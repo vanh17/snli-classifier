@@ -43,5 +43,4 @@ def main():
     print("F1_neutral: " + str(f1[2]*100))
 
 if __name__ == '__main__':
-	main()
-
+    main()
