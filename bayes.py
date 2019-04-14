@@ -81,11 +81,15 @@ class Bayes:
                 for word in premise+hypothesis:
                     if word in self.vocabulary[possible_labels[l]]:
                         probDict[l] += self.condprob[word][possible_labels[l]]
+                    else:
+                        probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
                 # bigram
                 for itr in range(len(hypothesis)-1):
                     t = hypothesis[itr]+"_"+hypothesis[itr+1]
                     if t in self.vocabulary[possible_labels[l]]:
                         probDict[l] += self.condprob[t][possible_labels[l]]
+                    else:
+                        probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
                 # cross unigram
                 for pre in range(len(prePos)):
                     for hypo in range(len(hypoPos)):
@@ -93,6 +97,8 @@ class Bayes:
                             t = prePos[pre][0]+"_"+hypoPos[hypo][0] 
                             if t in self.vocabulary[possible_labels[l]]:
                                probDict[l] += self.condprob[t][possible_labels[l]]
+                            else:
+                                probDict[l] += self.condprob["UNKNOWN"][possible_labels[l]]
                 # cross bigram
                 for pre in range(len(prePos)-1):
                     for hypo in range(len(hypoPos)-1):
