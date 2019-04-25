@@ -71,7 +71,7 @@ class RNN:
         self.modelHypo.add(Embedding(3500, self.embed_dim, input_length = doc_feat_matrixHypo.shape[1], dropout=0.1))
         self.modelHypo.add(LSTM(self.lstm_out, dropout_U=0.1, dropout_W=0.1))
         #combined structures of two LSTM
-        self.model.add(Merge([modelPremise, modelHypo],  mode='concat'))
+        self.model.add(Merge([self.modelPremise, self.modelHypo],  mode='concat'))
         self.model.add(Dense(3, activation='softmax'))
         self.model.compile(loss = 'categorical_crossentropy', optimizer='adam', metrics = ['accuracy'])
 
