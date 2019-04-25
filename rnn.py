@@ -80,15 +80,15 @@ class RNN:
         es = EarlyStopping(monitor='acc', mode='max', min_delta=0.0001)
 
         # #save the best model
-        filepath="best.hd5"
-        checkpoint = ModelCheckpoint(filepath, monitor='acc', verbose=1, save_best_only=True, mode='max')
-        callbacks_list = [checkpoint, es]
+        # filepath="best.hd5"
+        # checkpoint = ModelCheckpoint(filepath, monitor='acc', verbose=1, save_best_only=True, mode='max')
+        callbacks_list = [es]
 
         # #start the training here
         self.model.fit([doc_feat_matrixPremise, doc_feat_matrixHypo], to_categorical(self.lbEncoder.transform(train_labels)), batch_size = self.batch_size, epochs = 1,  callbacks = callbacks_list, verbose = 0)
 
     def predict(self, test_premise: Sequence[Text], test_hypo: Sequence[Text]):
-        self.model = load_model("best.hd5")
+        # self.model = load_model("best.hd5")
         test_feat_matrixPremise = pad_sequences(self.tokenizerPremise.texts_to_sequences(test_texts), maxlen=self.maxlenPremise)
         test_feat_matrixHypo = pad_sequences(self.tokenizer.texts_to_sequences(test_hypo), maxlen=self.maxlenHypo)
         return np.argmax(self.model.predict([test_feat_matrixPremise, test_feat_matrixHypo], batch_size=64, verbose=0), axis=1)
