@@ -88,6 +88,6 @@ class RNN:
 
     def predict(self, test_premise: Sequence[Text], test_hypo: Sequence[Text]):
         # self.model = load_model("best.hd5")
-        test_feat_matrixPremise = pad_sequences(self.tokenizerPremise.texts_to_sequences(test_texts), maxlen=self.maxlenPremise)
+        test_feat_matrixPremise = pad_sequences(self.tokenizerPremise.texts_to_sequences(test_premise), maxlen=self.maxlenPremise)
         test_feat_matrixHypo = pad_sequences(self.tokenizer.texts_to_sequences(test_hypo), maxlen=self.maxlenHypo)
         return np.argmax(self.model.predict([test_feat_matrixPremise, test_feat_matrixHypo], batch_size=64, verbose=0), axis=1)
