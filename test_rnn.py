@@ -38,9 +38,9 @@ def main():
 
     # predict RNN
     predicted_indices = clf.predict(premises, hypotheses)
-    f1 = f1_score(labels, predicted_indices, average=None)
-    f1_macro = f1_score(labels, predicted_indices, average="macro")
-    accuracy = accuracy_score(labels, predicted_indices)
+    f1 = f1_score(clf.to_labels(labels), predicted_indices, average=None)
+    f1_macro = f1_score(clf.to_labels(labels), predicted_indices, average="macro")
+    accuracy = accuracy_score(clf.to_labels(labels), predicted_indices)
 
     print("accuracy: " + str(accuracy*100))
     print("F1_macro: " + str(f1_macro*100))
