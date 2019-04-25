@@ -77,6 +77,4 @@ class Data_RNN:
                 if is_lemmatized:
                     premise = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[5])]
                     hypothesis = [lemmatizer.lemmatize(c) for c in nltk.word_tokenize(line[6])]
-                prePos = self.extract_pos(line[3])
-                hypoPos = self.extract_pos(line[4])
                 yield ((" ".join(premise), " ".join(hypothesis), label))
