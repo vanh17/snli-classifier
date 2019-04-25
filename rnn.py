@@ -72,7 +72,7 @@ class RNN:
         self.modelHypo.add(LSTM(self.lstm_out, dropout_U=0.1, dropout_W=0.1))
         #combined structures of two LSTM
         self.model.add(Merge([self.modelPremise, self.modelHypo],  mode='concat'))
-        self.model.add(Dense(3, activation='softmax'))
+        self.model.add(Dense(3, activation='softmax', input_shape=(5,)))
         self.model.compile(loss = 'categorical_crossentropy', optimizer='adam', metrics = ['accuracy'])
 
         # # do early stopping
@@ -84,7 +84,7 @@ class RNN:
         callbacks_list = [checkpoint, es]
 
         # #start the training here
-        self.model.fit([doc_feat_matrixPremise, doc_feat_matrixHypo], to_categorical(self.lbEncoder.transform(train_labels)), batch_size = self.batch_size, epochs = 10,  callbacks = callbacks_list, verbose = 0)
+        self.model.fit([doc_feat_matrixPremise, doc_feat_matrixHypo], to_categorical(self.lbEncoder.transform(train_labels)), batch_size = self.batch_size, epochs = 1,  callbacks = callbacks_list, verbose = 0)
 
     def predict(self, test_premise: Sequence[Text], test_hypo: Sequence[Text]):
         self.model = load_model("best.hd5")
