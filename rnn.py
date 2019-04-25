@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
-from keras.layers import Dense, Embedding, LSTM, Merge, InputLayer
+from keras.layers import Dense, Embedding, LSTM, Merge
 from keras.utils import to_categorical
 from typing import Iterator, Tuple, Text, Sequence
 from sklearn import preprocessing
@@ -25,7 +25,6 @@ class RNN:
         self.tokenizerHypo = Tokenizer(nb_words=3500, split=' ')
         #initial the model with Sequenctial class from Keras
         self.model = Sequential()
-        self.model.add(InputLayer(input_shape(5,)))
         #initial the premise model with Sequenctial class from Keras
         self.modelPremise = Sequential()
         #initial the hypothesis model with Sequenctial class from Keras
