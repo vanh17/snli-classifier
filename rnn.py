@@ -5,7 +5,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 from keras.preprocessing.text import Tokenizer
 from keras.preprocessing.sequence import pad_sequences
 from keras.models import Sequential
-from keras.layers import Dense, Embedding, LSTM
+from keras.layers import Dense, Embedding, LSTM, Merge
 from keras.utils import to_categorical
 from typing import Iterator, Tuple, Text, Sequence
 from sklearn import preprocessing
@@ -62,26 +62,32 @@ class RNN:
         doc_feat_matrixHypo = pad_sequences(doc_feat_matrixHypo)
         self.maxlenHypo = doc_feat_matrixHypo.shape[1]
 
-        # ##Buidling the LSTM network
-        # # Keras 2.0 does not support dropout anymore
-        # # Add spatial dropout instead
-        # self.model.add(Embedding(3500, self.embed_dim,input_length = doc_feat_matrix.shape[1], dropout=0.1))
-        # self.model.add(LSTM(self.lstm_out, dropout_U=0.1, dropout_W=0.1))
-        # self.model.add(Dense(20,activation='softmax'))
-        # self.model.compile(loss = 'categorical_crossentropy', optimizer='adam', metrics = ['accuracy'])
+        # Buidling the LSTM network
+        # Keras 2.0 does not support dropout anymore
+        # Add spatial dropout instead
+        self.modelPremise.add(Embedding(3500, self.embed_dim, input_length = doc_feat_matrixPremise.shape[1], dropout=0.1))
+        self.modelPremise.add(LSTM(self.lstm_out, dropout_U=0.1, dropout_W=0.1))
+        # structure for Hypo sentences with LSTM
+        self.modelHypo.add(Embedding(3500, self.embed_dim, input_length = doc_feat_matrixHypo.shape[1], dropout=0.1))
+        self.modelHypo.add(LSTM(self.lstm_out, dropout_U=0.1, dropout_W=0.1))
+        #combined structures of two LSTM
+        self.model.add(Merge([modelPremise, modelHypo],  mode='concat'))
+        self.model.add(Dense(3, activation='softmax'))
+        self.model.compile(loss = 'categorical_crossentropy', optimizer='adam', metrics = ['accuracy'])
 
         # # do early stopping
-        # es = EarlyStopping(monitor='acc', mode='max', min_delta=0.0001)
+        es = EarlyStopping(monitor='acc', mode='max', min_delta=0.0001)
 
         # #save the best model
-        # filepath="models/best.hd5"
-        # checkpoint = ModelCheckpoint(filepath, monitor='acc', verbose=1, save_best_only=True, mode='max')
-        # callbacks_list = [checkpoint, es]
+        filepath="best.hd5"
+        checkpoint = ModelCheckpoint(filepath, monitor='acc', verbose=1, save_best_only=True, mode='max')
+        callbacks_list = [checkpoint, es]
 
         # #start the training here
-        # self.model.fit(doc_feat_matrix, to_categorical(self.lbEncoder.transform(train_labels)), batch_size = self.batch_size, epochs = 10,  callbacks = callbacks_list, verbose = 0)
+        self.model.fit([doc_feat_matrixPremise, doc_feat_matrixHypo], to_categorical(self.lbEncoder.transform(train_labels)), batch_size = self.batch_size, epochs = 10,  callbacks = callbacks_list, verbose = 0)
 
-    def predict(self, test_texts: Sequence[Text]):
-        self.model = load_model("models/best.hd5")
-        test_feat_matrix = pad_sequences(self.tokenizer.texts_to_sequences(test_texts), maxlen=self.maxlen)
-        return np.argmax(self.model.predict(test_feat_matrix, batch_size=64, verbose=0), axis=1)
+    def predict(self, test_premise: Sequence[Text], test_hypo: Sequence[Text]):
+        self.model = load_model("best.hd5")
+        test_feat_matrixPremise = pad_sequences(self.tokenizerPremise.texts_to_sequences(test_texts), maxlen=self.maxlenPremise)
+        test_feat_matrixHypo = pad_sequences(self.tokenizer.texts_to_sequences(test_hypo), maxlen=self.maxlenHypo)
+        return np.argmax(self.model.predict([test_feat_matrixPremise, test_feat_matrixHypo], batch_size=64, verbose=0), axis=1)
