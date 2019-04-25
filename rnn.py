@@ -25,7 +25,7 @@ class RNN:
         self.tokenizerHypo = Tokenizer(nb_words=3500, split=' ')
         #initial the model with Sequenctial class from Keras
         self.model = Sequential()
-        self.model.add(InputLayer(input_shape=(5)))
+        self.model.add(InputLayer(input_shape=(5,)))
         #initial the premise model with Sequenctial class from Keras
         self.modelPremise = Sequential()
         #initial the hypothesis model with Sequenctial class from Keras
