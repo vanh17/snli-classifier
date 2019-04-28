@@ -17,7 +17,7 @@ To unzip run this:
 
 `unzip snli_1.0.zip`
 
-When it finishes unzipping the file. Please go to the project main directory by this command.
+When it finishes unzipping the file. Please go to the project main directory.
 
 At the project main directory, you will see there are two files called test_bayes.py and test_rnn.py. The two files are the main file to run naive Bayes approach and recurrent neural network LSTM approach respectively.
 
