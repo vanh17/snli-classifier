@@ -27,9 +27,9 @@ To run the naive Bayes, please use this command line:
 
 By default, the script will train on `data/snli_1.0/snli_1.0_train.txt` and evaluate on `data/snli_1.0/snli_1.0_dev.txt`. However, you can specify the option `--train_path`, `--test_path` like this to ask the script to train on file at specific directory. Please notice that the file extension here is .txt and not json. (*)
 
-`python test_bayes.py --train_path='your_full_path_to_trainset --test_path='your_full_path_to_testset`
+`python test_bayes.py --train_path=your_full_path_to_trainset --test_path=your_full_path_to_testset`
 
-You can also specify the two options `--is_lemmatized`, `--is_stemmed` for pre-processing the inputs with lemmatization or stemming. Please notice that default value is only tokenization (--is_stemmed=False) (--is_lemmatized=False) and only one of the two option can set to True at a time. To use this try
+You can also specify the two options `--is_lemmatized`, `--is_stemmed` for pre-processing the inputs with lemmatization or stemming. Please notice that default value is only tokenization (--is_stemmed=False, --is_lemmatized=False) and only one of the two option can set to True at a time. To use this try
 
 `python test_bayes.py --is_lemmatized=True`
 
@@ -37,7 +37,7 @@ You can also specify the two options `--is_lemmatized`, `--is_stemmed` for pre-p
 
 You can also combined option in (*) with the lemmatizaion and stemming. Please make sure there is a space between each option.
 
-`python test_bayes.py --train_path='your_full_path_to_trainset --test_path='your_full_path_to_testset --is_stemmed=True`
+`python test_bayes.py --train_path=your_full_path_to_trainset --test_path=your_full_path_to_testset --is_stemmed=True`
 
 To run LSTM, use this command line:
 
