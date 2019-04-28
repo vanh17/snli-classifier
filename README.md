@@ -1,6 +1,10 @@
 # snli-classifier
 This is a classifier for Standford Natural Language Inference Dataset.
 
+To clone your project to your local machine, run at your desired directory for the project:
+
+`git clone https://github.com/vanh17/snli-classifier.git`
+
 Before starting to the project, please make sure to run this command. This will create suitable environment to run the project.
 
 `pip install -r requirements.txt`
