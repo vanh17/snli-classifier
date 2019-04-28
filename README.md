@@ -35,8 +35,8 @@ You can also combined option in (*) with the lemmatizaion and stemming. Please m
 
 `python test_bayes.py --train_path='your_full_path_to_trainset --test_path='your_full_path_to_testset --is_stemmed=True`
 
-To run LSTM, please use this command line:
+To run LSTM, use this command line:
 
 `python test_rnn.py`
 
-LSTM model can also be called with exactly the same options available to naive Bayes (`--is_lemmatized`, `--is_stemmed`, `--train_path`, `--test_path`)
+LSTM model can also be called with exactly the same options available to naive Bayes (`--is_lemmatized`, `--is_stemmed`, `--train_path`, `--test_path`). Please notice that LSTM takes up to a day to train with 50 epochs, so you want to do something fun during such time.
