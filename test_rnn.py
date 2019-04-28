@@ -10,8 +10,8 @@ from sklearn.metrics import f1_score, accuracy_score
 # Will have the default values for each of the args. So that the use can just need to call
 # python test_bayes.py
 parser = argparse.ArgumentParser()
-parser.add_argument('--train_path', type=str, default='/data1/home/vnhh/snli/snli_1.0_train.txt')
-parser.add_argument('--test_path', type=str, default='/data1/home/vnhh/snli/snli_1.0_dev.txt')
+parser.add_argument('--train_path', type=str, default='data/snli_1.0/snli_1.0_train.txt')
+parser.add_argument('--test_path', type=str, default='data1/snli_1.0/snli_1.0_dev.txt')
 parser.add_argument('--is_lemmatized', type=bool, default=False)
 parser.add_argument('--is_stemmed', type=bool, default=False)
 
