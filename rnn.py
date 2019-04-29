@@ -84,7 +84,7 @@ class RNN:
         callbacks_list = [es]
 
         # #start the training here
-        self.model.fit([doc_feat_matrixPremise, doc_feat_matrixHypo], to_categorical(self.lbEncoder.transform(train_labels)), batch_size = self.batch_size, epochs = 5,  callbacks = callbacks_list, verbose = 0)
+        self.model.fit([doc_feat_matrixPremise, doc_feat_matrixHypo], to_categorical(self.lbEncoder.transform(train_labels)), batch_size = self.batch_size, epochs = 5,  callbacks = callbacks_list, verbose = 1)
 
     def predict(self, test_premise: Sequence[Text], test_hypo: Sequence[Text]):
         # self.model = load_model("best.hd5")
